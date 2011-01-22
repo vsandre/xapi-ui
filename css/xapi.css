@@ -1,0 +1,7 @@
+/* Custom CSS for the XAPI page */
+
+html, body, #bboxmap {
+    width: 512px;
+    height: 256px;
+    margin: 0;
+}
