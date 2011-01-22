@@ -3,11 +3,7 @@ $(document).ready(function() {
   var baseurl = '';
   // Set up the map
   map = new OpenLayers.Map('bboxmap', 
-                           {projection: "EPSG:900913",});
-  // var osm = new OpenLayers.Layer.OSM("bboxmap", "http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png", {attribution: '', numZoomLevels: 19});
- //  map.addLayer(osm);
-    // Do the initial setup
-  
+                           {projection: "EPSG:900913",});  
   // Register the move event (update the page when the map moves)
   map.events.register('move', map, function() {
     var bounds = map.getExtent().transform(goog, latlon);
