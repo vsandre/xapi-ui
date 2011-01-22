@@ -1,6 +1,9 @@
 $(document).ready(function() {
   // Set up some basics
-  var baseurl = '';
+  var config = {};
+
+  var baseurl;
+  
   // Set up the map
   map = new OpenLayers.Map('bboxmap', 
                            {projection: "EPSG:900913",});  
@@ -97,7 +100,6 @@ $(document).ready(function() {
     update_bbox();
     update_results();});
   $('#bbox_bottom').change(function() {
-  http://a.tile.openstreetmap.org/  update_bbox();
     update_results();});
   $('#bbox_left').change(function() {
     update_bbox();
@@ -109,6 +111,7 @@ $(document).ready(function() {
   $.getJSON("config.json", function(json) {
     baseurl = json.baseurl;
     tileurl = json.tileurl;
+    document.title = json.title;
     attribution = json.attribution;
     
     var osm = new OpenLayers.Layer.OSM("bboxmap",
