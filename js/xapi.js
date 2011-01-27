@@ -112,6 +112,7 @@ $(document).ready(function() {
     baseurl = json.baseurl;
     tileurl = json.tileurl;
     document.title = json.title;
+    $("title").text(json.title);
     attribution = json.attribution;
     
     var osm = new OpenLayers.Layer.OSM("bboxmap",
