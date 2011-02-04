@@ -1,13 +1,12 @@
 $(document).ready(function() {
   // Set up some basics
-  var baseurl = '';
+  var config = {};
+
+  var baseurl;
+  
   // Set up the map
   map = new OpenLayers.Map('bboxmap', 
-                           {projection: "EPSG:900913",});
-  // var osm = new OpenLayers.Layer.OSM("bboxmap", "http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png", {attribution: '', numZoomLevels: 19});
- //  map.addLayer(osm);
-    // Do the initial setup
-  
+                           {projection: "EPSG:900913",});  
   // We'll use these projections in our functions later
   var goog =  new OpenLayers.Projection("EPSG:900913");
   var latlon = new OpenLayers.Projection("EPSG:4326");
@@ -133,6 +132,8 @@ $(document).ready(function() {
   $.getJSON("config.json", function(json) {
     baseurl = json.baseurl;
     tileurl = json.tileurl;
+    document.title = json.title;
+    $("title").text(json.title);
     attribution = json.attribution;
     
     var osm = new OpenLayers.Layer.OSM("bboxmap",
