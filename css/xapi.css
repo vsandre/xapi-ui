@@ -17,10 +17,28 @@ input[type='text']:focus { background: #FFCA00; border: 1px solid #000; color: #
 label.bbox { font-family:sans-serif; font-size:xx-small; font-weight:bold; display: block;}
 input.bbox { width:90px; text-align: center;}
 
-.bounds { background-color: none; border: none; text-align: center; width: 90px; height: 33px}
+.bounds { border: none; text-align: center; width: 90px; height: 33px}
 
-#bbox {position:relative; margin:5px; height:99px; width=185px; clear:booth;}
+#bbox {position:relative; margin:5px; height:99px; width:185px;}
 #b_top { position: absolute; top: 0px; left: 50px; }
 #b_right { position: absolute; top: 33px; left: 95px; }
 #b_bottom { position: absolute; top: 66px; left: 50px; }
 #b_left { position: absolute; top: 33px; left: 0px; }
+
+/*OL BBOX*/
+.olBBOXselect{
+    border: 2px solid orange;
+    position: absolute;
+    background-color: white;
+    opacity: 0.50;
+    font-size: 1px;
+    filter: alpha(opacity=50);
+}
+.olBBOX{
+    border: 2px solid orange;
+    position: absolute;
+    background-color: green;
+    opacity: 0.50;
+    font-size: 1px;
+    filter: alpha(opacity=50);
+} 

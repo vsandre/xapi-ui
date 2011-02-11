@@ -11,22 +11,23 @@ $(document).ready(function() {
   var goog =  new OpenLayers.Projection("EPSG:900913");
   var latlon = new OpenLayers.Projection("EPSG:4326");
 
-  var drawbbox = true;
-
-  var bboxVectors = new OpenLayers.Layer.Vector("Bounding Box");
+  var bboxVectors = new OpenLayers.Layer.Vector("Bounding Box", {});
   map.addLayer(bboxVectors);
-  var bboxShiftControl = new OpenLayers.Control();
-  OpenLayers.Util.extend(bboxShiftControl, {
-    draw: function () {
-      // this Handler.Box will intercept the shift-mousedown
-      // before Control.MouseDefault gets to see it
-      this.box = new OpenLayers.Handler.Box( bboxShiftControl,
-          {"done": this.notice},
-          {keyMask: OpenLayers.Handler.MOD_SHIFT});
-      this.box.activate();
+  
+  bboxControl = OpenLayers.Class(OpenLayers.Control, {
+    handleRightClicks: false, // should be true if you use CTRL key
+    autoActivate: true,
+    draw: function() {
+        this.box = new OpenLayers.Handler.Box( this,
+            {"done": this.notice},
+            {keyMask: this.keyMask});
+        this.box.boxDivClassName = "olBBOXselect";
+        if (this.handleRightClicks) {
+            this.map.viewPortDiv.oncontextmenu = OpenLayers.Function.False;
+        }
+        this.box.activate();
     },
-
-    notice: function (bounds) {
+    notice: function(bounds) {
       var ll = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.left, bounds.bottom)); 
       var ur = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.right, bounds.top)); 
       var llLat = ll.transform(map.getProjectionObject(), latlon);
@@ -36,38 +37,22 @@ $(document).ready(function() {
       $('#bbox_right').val(urLat.lon.toFixed(5));
       $('#bbox_top').val(urLat.lat.toFixed(5));
       update_bbox();
-      update_results();      
-      $('#noneToggle').attr('checked','true');
+      update_results(); 
+    },
+    deactivate: function() {
+      this.box.deactivate();
+    },
+    activate: function() {
+      this.box.activate();
     }
   });
-  map.addControl(bboxShiftControl);
-
-  //  draw box without shift
-  bboxToggleControl = new OpenLayers.Control.DrawFeature(bboxVectors,
-    OpenLayers.Handler.RegularPolygon, {handlerOptions: {sides: 4, irregular: true}});
-  map.addControl(bboxToggleControl);
   
-  bboxToggleControl.featureAdded=featureInsert;
-  function featureInsert(feature) {
-    var old=[];
-    for (var i = 0; i < bboxVectors.features.length; i++) {
-        if (bboxVectors.features[i] != feature) {
-            old.push(bboxVectors.features[i]);
-        }
-    }
-    bboxVectors.destroyFeatures(old);
-    
-    var bounds = feature.geometry.getBounds();
-    bounds=bounds.transform(map.getProjectionObject(), latlon);
-    $('#bbox_top').val(bounds.top.toFixed(5));
-    $('#bbox_right').val(bounds.right.toFixed(5));
-    $('#bbox_bottom').val(bounds.bottom.toFixed(5));
-    $('#bbox_left').val(bounds.left.toFixed(5));
+  var bboxKeyControl = new bboxControl({handleRightClicks:true, keyMask: OpenLayers.Handler.MOD_CTRL});
+  map.addControl(bboxKeyControl);
 
-    update_results();      
-    $('#bboxNone').attr('checked','true');
-    bboxToggleControl.deactivate();
-  }
+  var bboxToggleControl = new bboxControl();
+  map.addControl(bboxToggleControl);
+  bboxToggleControl.deactivate();
 
   // Function to return proper tag search string
   var tagsearch = function() {
@@ -96,7 +81,16 @@ $(document).ready(function() {
     var bboxGeom = bounds.toGeometry();
     bboxVectors.removeAllFeatures();
     bboxVectors.addFeatures([new OpenLayers.Feature.Vector(bboxGeom)]);
-    };
+
+    $('#bboxNone').attr('checked','true');
+    bboxToggleControl.deactivate();
+  };
+
+  // Draw BBOX wihle toggle is activated
+  $('#bboxNone').click(function() {
+    bboxToggleControl.deactivate(); });
+  $('#bboxToggle').click(function() {
+    bboxToggleControl.activate(); });
 
   // Function to update the display on the page  
   var update_results = function() {
@@ -113,12 +107,6 @@ $(document).ready(function() {
     $('#results').attr('href', results);
   };
 
-  // Draw BBOX wihle toggle is activated
-  $('#bboxNone').click(function() {
-    bboxToggleControl.deactivate(); });
-  $('#bboxToggle').click(function() {
-    bboxToggleControl.activate(); });
-
   // Set up some UI element functions
   $("#searchbytag").click(function() {
     if ( $(this).is(':checked') ) {
@@ -131,13 +119,13 @@ $(document).ready(function() {
     };
     update_results();
   });
-  
+
   $('#element').change(function() {
     update_results(); });
   
   $('#tag').keyup(function() {
     update_results(); });
-  
+
   $('#searchbybbox').click(function() {
     if ( $(this).is(':checked')) {
       $('#bbox_top').removeAttr('disabled');
@@ -153,7 +141,8 @@ $(document).ready(function() {
       $('#bbox_left').attr('disabled', 'disabled');
       $('#bbox_right').attr('disabled', 'disabled');
       $('#bboxNone').attr('disabled', 'disabled');
-      $('#bboxToggle').attr('disabled', 'disabled');};
+      $('#bboxToggle').attr('disabled', 'disabled');
+    };
     update_results();
   });
 
