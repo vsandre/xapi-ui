@@ -11,14 +11,16 @@ $(document).ready(function() {
   var goog =  new OpenLayers.Projection("EPSG:900913");
   var latlon = new OpenLayers.Projection("EPSG:4326");
 
+  var drawbbox = true;
+
   var bboxVectors = new OpenLayers.Layer.Vector("Bounding Box");
   map.addLayer(bboxVectors);
-  var control = new OpenLayers.Control();
-  OpenLayers.Util.extend(control, {
+  var bboxControl = new OpenLayers.Control();
+  OpenLayers.Util.extend(bboxControl, {
     draw: function () {
       // this Handler.Box will intercept the shift-mousedown
       // before Control.MouseDefault gets to see it
-      this.box = new OpenLayers.Handler.Box( control,
+      this.box = new OpenLayers.Handler.Box( bboxControl,
           {"done": this.notice},
           {keyMask: OpenLayers.Handler.MOD_SHIFT});
       this.box.activate();
@@ -34,11 +36,52 @@ $(document).ready(function() {
       $('#bbox_right').val(urLat.lon.toFixed(5));
       $('#bbox_top').val(urLat.lat.toFixed(5));
       update_bbox();
+      update_results();      
+      $('#noneToggle').attr('checked','true');
     }
   });
-  map.addControl(control);
+  map.addControl(bboxControl);
 
-  // Function to return proper tag search string
+  //  draw box without shift
+  polygonControl = new OpenLayers.Control.DrawFeature(bboxVectors,
+    OpenLayers.Handler.RegularPolygon, {handlerOptions: {sides: 4, irregular: true}});
+  map.addControl(polygonControl);
+  polygonControl.featureAdded=featureInsert;
+
+  function featureInsert(feature){
+    var old=[];
+    for (var i = 0; i < bboxVectors.features.length; i++) {
+        if (bboxVectors.features[i] != feature) {
+            old.push(bboxVectors.features[i]);
+        }
+    }
+    bboxVectors.destroyFeatures(old);
+    /*feature.geometry.transform(new OpenLayers.Projection("EPSG:4326"),
+                                     new OpenLayers.Projection("EPSG:900913"));
+    var bounds = feature.geometry.getBounds();
+    var ll = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.left, bounds.bottom)); 
+    var ur = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.right, bounds.top)); 
+    var llLat = ll.transform(map.getProjectionObject(), latlon);
+    var urLat = ur.transform(map.getProjectionObject(), latlon);
+    $('#bbox_left').val(llLat.lon.toFixed(5));
+    $('#bbox_bottom').val(llLat.lat.toFixed(5));
+    $('#bbox_right').val(urLat.lon.toFixed(5));
+    $('#bbox_top').val(urLat.lat.toFixed(5));*/
+    
+    var bounds = feature.geometry.getBounds();
+    bounds=bounds.transform(map.getProjectionObject(), latlon);
+    $('#bbox_top').val(bounds.top.toFixed(5));
+    $('#bbox_right').val(bounds.right.toFixed(5));
+    $('#bbox_bottom').val(bounds.bottom.toFixed(5));
+    $('#bbox_left').val(bounds.left.toFixed(5));
+
+    //update_bbox();
+    update_results();      
+    $('#noneToggle').attr('checked','true');
+    polygonControl.deactivate();
+  }
+
+        // Function to return proper tag search string
   var tagsearch = function() {
     if($("#searchbytag").is(':checked')) {
       t = $('#element').val() + '[' + $('#tag').val() + ']';
@@ -90,7 +133,7 @@ $(document).ready(function() {
     }
     else {
       $('#tag').attr('disabled', 'disabled');
-      $('#element').attr('disabled', 'disabled');  		
+      $('#element').attr('disabled', 'disabled');
     };
     update_results();
   });
@@ -133,7 +176,7 @@ $(document).ready(function() {
     baseurl = json.baseurl;
     tileurl = json.tileurl;
     document.title = json.title;
-    $("title").text(json.title);
+    $('#title').text(json.title);
     attribution = json.attribution;
     
     var osm = new OpenLayers.Layer.OSM("bboxmap",

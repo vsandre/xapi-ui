@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
     <meta charset="utf-8" />
     <title>
-      XAPI Frontend 0.04
+      XAPI Selector
     </title>
     <!-- JQuery UI is currently not used but may be used in the future
     for fancy UI elements -->
@@ -23,43 +23,66 @@
   
   <body>
     <div id="title">
-      XAPI Frontend 0.04
+      XAPI Selector
     </div>
-    <div id="search_by_tags">
-      <input type="checkbox" id="searchbytag" checked="checked" />
-      <label for="searchbytag">Search by Tag</label>
-      <br/>
-      <select id="element">
-	<option value="*" selected="selected">Any</option>
-	<option value="node">Nodes</option>
-	<option value="way">Ways</option>
-	<option value="relation">Relations</option>	
-      </select>
-      <input type="text" name="tag" value="key=value" id="tag" />
+    <div id="xapiselector">
+      <div id="search_by_tags">
+        <input type="checkbox" id="searchbytag" checked="checked" />
+        <label for="searchbytag">Search by Tag</label>
+        <div id="search_by_tags_elements">
+          <select id="element">
+            <option value="*" selected="selected">Any</option>
+            <option value="node">Nodes</option>
+            <option value="way">Ways</option>
+            <option value="relation">Relations</option>	
+          </select>
+
+          <input type="text" name="tag" value="key=value" id="tag" />
+        </div>
+      </div>
+
+      <div id="search_by_bbox">
+        <input type="checkbox" id="searchbybbox" />
+        <label for="searchbybbox">Search by Area</label>
+
+        <div id="mapcontrol">
+          <input type="radio" name="type"
+                 value="none" id="noneToggle"
+                 checked="checked" onclick="polygonControl.deactivate();"/>
+          <label for="noneToggle">navigate</label>
+
+          <input type="radio" name="type"
+                 value="polygon" id="polygonToggle" onclick="polygonControl.activate()""/>
+          <label for="polygonToggle">select area</label>
+        </div>
+
+        <div id="bboxmap"></div>
+        <div id="attribution"></div>
+
+        <div id="bbox">
+          <div id="b_top" class="bounds">
+            <label for="bbox_top" class="bbox">top:</label>
+            <input type="text" id="bbox_top" class="bbox" maxlength="10" value="90.00000" disabled="yes" />
+          </div>
+          <div id="b_right" class="bounds">
+            <label for="bbox_right" class="bbox">right:</label>
+            <input type="text" id="bbox_right" class="bbox" maxlength="10" value="180.00000" disabled="yes" />
+          </div>
+          <div id="b_bottom" class="bounds">
+            <label for="bbox_bottom" class="bbox">bottom:</label>
+            <input type="text" id="bbox_bottom" class="bbox" maxlength="10" value="-90.00000" disabled="yes" />
+          </div>
+          <div id="b_left" class="bounds">
+            <label for="bbox_left" class="bbox">left:</label>
+            <input type="text" id="bbox_left" class="bbox" maxlength="10" value="-180.00000" disabled="yes" />
+          </div>
+        </div>
+      </div>
+
+      <div id="xapiurl">
+        Results:
+        <a id="results" href="">URL Here</a>
+      </div>
     </div>
-    
-    <div id="search_by_bbox">
-      <input type="checkbox" id="searchbybbox" />
-      <label for="searchbybbox">Search by Area</label>
-      <br/>
-      <div id="bboxmap"></div>
-      <div id="attribution"></div>
-      <label for="bbox_top">Top:</label>
-      <input type="text" id="bbox_top" disabled="disabled"/>
-      <br/>
-      <label for="bbox_bottom">Bottom:</label>
-      <input type="text" id="bbox_bottom" disabled="disabled"/>
-      <br/>
-      <label for="bbox_left">Left:</label>
-      <input type="text" id="bbox_left" disabled="disabled" />
-      <br/>
-      <label for="bbox_right">Right:</label>
-      <input type="text" id="bbox_right" disabled="disabled" />
-    </div>
-  
-    Results
-    <br/>
-    <a id="results" href="">URL Here</a>
-    
   </body>
 </html>
