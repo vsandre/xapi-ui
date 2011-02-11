@@ -23,9 +23,11 @@ $(document).ready(function() {
             {keyMask: this.keyMask});
         this.box.boxDivClassName = "olBBOXselect";
         if (this.handleRightClicks) {
-            this.map.viewPortDiv.oncontextmenu = OpenLayers.Function.False;
+          this.map.viewPortDiv.oncontextmenu = OpenLayers.Function.False;
         }
-        this.box.activate();
+        if (this.autoActivate) {
+          this.box.activate();
+        }
     },
     notice: function(bounds) {
       var ll = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.left, bounds.bottom)); 
