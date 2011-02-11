@@ -15,12 +15,12 @@ $(document).ready(function() {
 
   var bboxVectors = new OpenLayers.Layer.Vector("Bounding Box");
   map.addLayer(bboxVectors);
-  var bboxControl = new OpenLayers.Control();
-  OpenLayers.Util.extend(bboxControl, {
+  var bboxShiftControl = new OpenLayers.Control();
+  OpenLayers.Util.extend(bboxShiftControl, {
     draw: function () {
       // this Handler.Box will intercept the shift-mousedown
       // before Control.MouseDefault gets to see it
-      this.box = new OpenLayers.Handler.Box( bboxControl,
+      this.box = new OpenLayers.Handler.Box( bboxShiftControl,
           {"done": this.notice},
           {keyMask: OpenLayers.Handler.MOD_SHIFT});
       this.box.activate();
@@ -40,15 +40,15 @@ $(document).ready(function() {
       $('#noneToggle').attr('checked','true');
     }
   });
-  map.addControl(bboxControl);
+  map.addControl(bboxShiftControl);
 
   //  draw box without shift
-  polygonControl = new OpenLayers.Control.DrawFeature(bboxVectors,
+  bboxToggleControl = new OpenLayers.Control.DrawFeature(bboxVectors,
     OpenLayers.Handler.RegularPolygon, {handlerOptions: {sides: 4, irregular: true}});
-  map.addControl(polygonControl);
-  polygonControl.featureAdded=featureInsert;
-
-  function featureInsert(feature){
+  map.addControl(bboxToggleControl);
+  
+  bboxToggleControl.featureAdded=featureInsert;
+  function featureInsert(feature) {
     var old=[];
     for (var i = 0; i < bboxVectors.features.length; i++) {
         if (bboxVectors.features[i] != feature) {
@@ -56,17 +56,6 @@ $(document).ready(function() {
         }
     }
     bboxVectors.destroyFeatures(old);
-    /*feature.geometry.transform(new OpenLayers.Projection("EPSG:4326"),
-                                     new OpenLayers.Projection("EPSG:900913"));
-    var bounds = feature.geometry.getBounds();
-    var ll = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.left, bounds.bottom)); 
-    var ur = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.right, bounds.top)); 
-    var llLat = ll.transform(map.getProjectionObject(), latlon);
-    var urLat = ur.transform(map.getProjectionObject(), latlon);
-    $('#bbox_left').val(llLat.lon.toFixed(5));
-    $('#bbox_bottom').val(llLat.lat.toFixed(5));
-    $('#bbox_right').val(urLat.lon.toFixed(5));
-    $('#bbox_top').val(urLat.lat.toFixed(5));*/
     
     var bounds = feature.geometry.getBounds();
     bounds=bounds.transform(map.getProjectionObject(), latlon);
@@ -75,13 +64,12 @@ $(document).ready(function() {
     $('#bbox_bottom').val(bounds.bottom.toFixed(5));
     $('#bbox_left').val(bounds.left.toFixed(5));
 
-    //update_bbox();
     update_results();      
-    $('#noneToggle').attr('checked','true');
-    polygonControl.deactivate();
+    $('#bboxNone').attr('checked','true');
+    bboxToggleControl.deactivate();
   }
 
-        // Function to return proper tag search string
+  // Function to return proper tag search string
   var tagsearch = function() {
     if($("#searchbytag").is(':checked')) {
       t = $('#element').val() + '[' + $('#tag').val() + ']';
@@ -124,7 +112,13 @@ $(document).ready(function() {
     $('#results').text(results);
     $('#results').attr('href', results);
   };
-    
+
+  // Draw BBOX wihle toggle is activated
+  $('#bboxNone').click(function() {
+    bboxToggleControl.deactivate(); });
+  $('#bboxToggle').click(function() {
+    bboxToggleControl.activate(); });
+
   // Set up some UI element functions
   $("#searchbytag").click(function() {
     if ( $(this).is(':checked') ) {
@@ -150,12 +144,16 @@ $(document).ready(function() {
       $('#bbox_bottom').removeAttr('disabled');
       $('#bbox_left').removeAttr('disabled');
       $('#bbox_right').removeAttr('disabled');
+      $('#bboxNone').removeAttr('disabled');
+      $('#bboxToggle').removeAttr('disabled');
     }
     else {
       $('#bbox_top').attr('disabled', 'disabled');
       $('#bbox_bottom').attr('disabled', 'disabled');
       $('#bbox_left').attr('disabled', 'disabled');
-      $('#bbox_right').attr('disabled', 'disabled');};
+      $('#bbox_right').attr('disabled', 'disabled');
+      $('#bboxNone').attr('disabled', 'disabled');
+      $('#bboxToggle').attr('disabled', 'disabled');};
     update_results();
   });
 

@@ -46,14 +46,11 @@
         <label for="searchbybbox">Search by Area</label>
 
         <div id="mapcontrol">
-          <input type="radio" name="type"
-                 value="none" id="noneToggle"
-                 checked="checked" onclick="polygonControl.deactivate();"/>
-          <label for="noneToggle">navigate</label>
+          <input type="radio" name="type" id="bboxNone" checked="checked" disabled="yes" />
+          <label for="bboxNone">navigate</label>
 
-          <input type="radio" name="type"
-                 value="polygon" id="polygonToggle" onclick="polygonControl.activate()""/>
-          <label for="polygonToggle">select area</label>
+          <input type="radio" name="type" id="bboxToggle" disabled="yes" />
+          <label for="bboxToggle">select area</label>
         </div>
 
         <div id="bboxmap"></div>
