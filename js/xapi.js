@@ -4,6 +4,8 @@ $(document).ready(function() {
 
   var baseurl;
   
+  var drawbox = false;
+  
   // Set up the map
   map = new OpenLayers.Map('bboxmap', 
                            {projection: "EPSG:900913",});  
@@ -30,16 +32,18 @@ $(document).ready(function() {
         }
     },
     notice: function(bounds) {
-      var ll = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.left, bounds.bottom)); 
-      var ur = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.right, bounds.top)); 
-      var llLat = ll.transform(map.getProjectionObject(), latlon);
-      var urLat = ur.transform(map.getProjectionObject(), latlon);
-      $('#bbox_left').val(llLat.lon.toFixed(5));
-      $('#bbox_bottom').val(llLat.lat.toFixed(5));
-      $('#bbox_right').val(urLat.lon.toFixed(5));
-      $('#bbox_top').val(urLat.lat.toFixed(5));
-      update_bbox();
-      update_results(); 
+      if (drawbox) {
+        var ll = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.left, bounds.bottom)); 
+        var ur = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.right, bounds.top)); 
+        var llLat = ll.transform(map.getProjectionObject(), latlon);
+        var urLat = ur.transform(map.getProjectionObject(), latlon);
+        $('#bbox_left').val(llLat.lon.toFixed(5));
+        $('#bbox_bottom').val(llLat.lat.toFixed(5));
+        $('#bbox_right').val(urLat.lon.toFixed(5));
+        $('#bbox_top').val(urLat.lat.toFixed(5));
+        update_bbox();
+        update_results();
+      }
     },
     deactivate: function() {
       this.box.deactivate();
@@ -136,6 +140,7 @@ $(document).ready(function() {
       $('#bbox_right').removeAttr('disabled');
       $('#bboxNone').removeAttr('disabled');
       $('#bboxToggle').removeAttr('disabled');
+      drawbox = true;
     }
     else {
       $('#bbox_top').attr('disabled', 'disabled');
@@ -144,6 +149,7 @@ $(document).ready(function() {
       $('#bbox_right').attr('disabled', 'disabled');
       $('#bboxNone').attr('disabled', 'disabled');
       $('#bboxToggle').attr('disabled', 'disabled');
+      drawbox = false;
     };
     update_results();
   });
