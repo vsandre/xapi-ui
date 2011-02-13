@@ -1,6 +1,16 @@
 XAPI UI
 ========
 
+Next steps
+-----------
+- support multiple xapi instances
+- support other services based on bbox queries (OSM History, OWL, ...)
+- set maximum bbox for a service
+- support multiple background maps
+
+Description
+-----------
+
 This repository provides an HTML based frontend to OpenStreetMap's
 XAPI service, providing easy to use access to its most common feature
 
