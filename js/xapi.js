@@ -4,6 +4,7 @@ $(document).ready(function() {
 
   var baseurl;
   
+  // 'search by area' enables drawing new bbox
   var drawbox = false;
   
   // Set up the map
@@ -13,9 +14,26 @@ $(document).ready(function() {
   var goog =  new OpenLayers.Projection("EPSG:900913");
   var latlon = new OpenLayers.Projection("EPSG:4326");
 
+  var outofboundscheck = function(coord,lat_or_lon) {
+    var bounds_min = 0;
+    var bounds_max = 0;
+    if (lat_or_lon == "lat") {
+      bounds_min = -90;
+      bounds_max = 90;
+    }
+    if (lat_or_lon == "lon") {
+      bounds_min = -180;
+      bounds_max = 180;
+    }
+    if ((bounds_min==0)&&(bounds_max==0)) { return null; }
+    if (coord < bounds_min) { coord = bounds_min; }
+    if (coord > bounds_max) { coord = bounds_max; }
+    return coord;
+  };
+
   var bboxVectors = new OpenLayers.Layer.Vector("Bounding Box", {});
   map.addLayer(bboxVectors);
-  
+
   bboxControl = OpenLayers.Class(OpenLayers.Control, {
     handleRightClicks: false, // should be true if you use CTRL key
     autoActivate: true,
@@ -37,10 +55,10 @@ $(document).ready(function() {
         var ur = map.getLonLatFromPixel(new OpenLayers.Pixel(bounds.right, bounds.top)); 
         var llLat = ll.transform(map.getProjectionObject(), latlon);
         var urLat = ur.transform(map.getProjectionObject(), latlon);
-        $('#bbox_left').val(llLat.lon.toFixed(5));
-        $('#bbox_bottom').val(llLat.lat.toFixed(5));
-        $('#bbox_right').val(urLat.lon.toFixed(5));
-        $('#bbox_top').val(urLat.lat.toFixed(5));
+        $('#bbox_left').val(outofboundscheck(llLat.lon.toFixed(5),'lon'));
+        $('#bbox_bottom').val(outofboundscheck(llLat.lat.toFixed(5),'lat'));
+        $('#bbox_right').val(outofboundscheck(urLat.lon.toFixed(5),'lon'));
+        $('#bbox_top').val(outofboundscheck(urLat.lat.toFixed(5),'lat'));
         update_bbox();
         update_results();
       }
@@ -104,7 +122,8 @@ $(document).ready(function() {
     if ($('#searchbytag').is(':checked')) {
       results = results + tagsearch();
       if ($('#searchbybbox').is(':checked')) {
-        results = results + '[' + bbox() + ']'; };}
+        results = results + '[' + bbox() + ']'; };
+    }
     else {
       if ($('#searchbybbox').is(':checked')) {
         results = results + 'map?' + bbox(); }
