@@ -9,7 +9,8 @@ $(document).ready(function() {
   
   // Set up the map
   map = new OpenLayers.Map('bboxmap', 
-                           {projection: "EPSG:900913",});  
+                           {projection: "EPSG:900913",});
+
   // We'll use these projections in our functions later
   var goog =  new OpenLayers.Projection("EPSG:900913");
   var latlon = new OpenLayers.Projection("EPSG:4326");
@@ -40,7 +41,7 @@ $(document).ready(function() {
       }
     };
     this.get = function() {
-      return this.value;
+      return parseFloat(this.value);
     };
     this.outofboundscheck = function(coord) {
       var bounds_min = 0;
@@ -71,13 +72,13 @@ $(document).ready(function() {
     this.check = function() {
       var updateNeeded = false;
       var temp;
-      if(parseFloat(this.left.get()) > parseFloat(this.right.get())) {
+      if(this.left.get() > this.right.get()) {
         temp = this.left.get();
         this.left.set(this.right.get());
         this.right.set(temp);
         updateNeeded = true;
       };
-      if(parseFloat(this.bottom.get()) > parseFloat(this.top.get())) {
+      if(this.bottom.get() > this.top.get()) {
         temp = this.bottom.get();
         this.bottom.set(this.top.get());
         this.top.set(temp);
@@ -273,13 +274,18 @@ $(document).ready(function() {
     tileurl = json.tileurl;
     document.title = json.title;
     $('#title').text(json.title);
-    attribution = json.attribution;
-    
-    var osm = new OpenLayers.Layer.OSM("bboxmap",
-                                       tileurl + "${z}/${x}/${y}.png",
-                                       {attribution: ''});
-    $('#attribution').text(attribution);
-    map.addLayer(osm);
+
+    var maps = json.map;
+    var count_maps = 0;
+    $.each(maps, function(index, amap) {
+      map.addLayer(new OpenLayers.Layer.OSM(amap.name,
+        amap.tiles + "${z}/${x}/${y}.png", {atribution:''}));
+      count_maps++;
+      $('#attribution').append('<b>'+amap.name+':</b> '+amap.attribution+'<br />');
+    });
+    if (count_maps>1) {
+      map.addControl(new OpenLayers.Control.LayerSwitcher());
+    };
     map.zoomTo(1);
     update_results();
   });

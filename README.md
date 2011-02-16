@@ -6,7 +6,8 @@ Next steps
 - support multiple xapi instances
 - support other services based on bbox queries (OSM History, OWL, ...)
 - set maximum bbox for a service
-- support multiple background maps
+- show only the current map attribution
+- list of predefined bboxs
 
 Description
 -----------

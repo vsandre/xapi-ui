@@ -1,5 +1,15 @@
 { "title": "My XAPI Server Frontend",
   "baseurl": "http://newbaseurl.com",
-  "tileurl": "http://otile1.mqcdn.com/tiles/1.0.0/osm/",
-  "attribution": "Put attribution here (off the map)"
+  "map": [
+    {
+      "name": "MapQuest",
+      "tiles": "http://otile1.mqcdn.com/tiles/1.0.0/osm/",
+      "attribution": "Data, imagery and map information provided by MapQuest, <a href='<http://www.openstreetmap.org/'>Open Street Map</a> and contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>"
+    },
+    {
+      "name": "OpenStreetMap",
+      "tiles": "http://a.tile.openstreetmap.org/",
+      "attribution": "Data <a href='<http://www.openstreetmap.org/'>Open Street Map</a> and contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>"
+    }
+  ]
 }
