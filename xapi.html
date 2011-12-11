@@ -22,14 +22,16 @@
   </head>
   
   <body>
-    <div id="title">
+    <h1 id="title">
       XAPI Selector
-    </div>
+    </h1>
     <div id="xapiselector">
       <div id="search_by_tags">
-        <input type="checkbox" id="searchbytag" checked="checked" />
-        <label for="searchbytag">Search by Tag</label>
-        <div id="search_by_tags_elements">
+        <div class="filter_box_top">
+           <input type="checkbox" id="searchbytag" checked="checked" />
+           <label for="searchbytag">Search by Tag</label>
+        </div>
+        <div class="filter_box_content">
           <select id="element">
             <option value="*" selected="selected">Any</option>
             <option value="node">Nodes</option>
@@ -42,43 +44,47 @@
       </div>
 
       <div id="search_by_bbox">
-        <input type="checkbox" id="searchbybbox" />
-        <label for="searchbybbox">Search by Area</label>
-
-        <div id="mapcontrol">
-          <input type="radio" name="type" id="bboxNone" checked="checked" disabled="yes" />
-          <label for="bboxNone">navigate</label>
-
-          <input type="radio" name="type" id="bboxToggle" disabled="yes" />
-          <label for="bboxToggle">select area</label>
+        <div class="filter_box_top">
+          <input type="checkbox" id="searchbybbox" />
+          <label for="searchbybbox">Search by Area</label>
         </div>
-
-        <div id="bboxmap"></div>
-        <div id="attribution"></div>
-
-        <div id="bbox">
-        <div id="b_left" class="bounds">
-            <label for="bbox_left" class="bbox">left:</label>
-            <input type="text" id="bbox_left" class="bbox" maxlength="10" value="-180.00000" disabled="yes" />
+        <div class="filter_box_content">
+          
+          <div id="mapcontrol">
+            <input type="radio" name="type" id="bboxNone" checked="checked" disabled="yes" />
+            <label for="bboxNone">navigate</label>
+          
+            <input type="radio" name="type" id="bboxToggle" disabled="yes" />
+            <label for="bboxToggle">select area</label>
           </div>
-          <div id="b_bottom" class="bounds">
-            <label for="bbox_bottom" class="bbox">bottom:</label>
-            <input type="text" id="bbox_bottom" class="bbox" maxlength="10" value="-90.00000" disabled="yes" />
-          </div>
-          <div id="b_right" class="bounds">
-            <label for="bbox_right" class="bbox">right:</label>
-            <input type="text" id="bbox_right" class="bbox" maxlength="10" value="180.00000" disabled="yes" />
-          </div>
-          <div id="b_top" class="bounds">
-            <label for="bbox_top" class="bbox">top:</label>
-            <input type="text" id="bbox_top" class="bbox" maxlength="10" value="90.00000" disabled="yes" />
+          
+          <div id="bboxmap"></div>
+          <!--<div id="attribution"></div>-->
+          
+          <div id="bbox">
+          <div id="b_left" class="bounds">
+              <label for="bbox_left" class="bbox">left:</label>
+              <input type="text" id="bbox_left" class="bbox" maxlength="10" value="-180.00000" disabled="yes" />
+            </div>
+            <div id="b_bottom" class="bounds">
+              <label for="bbox_bottom" class="bbox">bottom:</label>
+              <input type="text" id="bbox_bottom" class="bbox" maxlength="10" value="-90.00000" disabled="yes" />
+            </div>
+            <div id="b_right" class="bounds">
+              <label for="bbox_right" class="bbox">right:</label>
+              <input type="text" id="bbox_right" class="bbox" maxlength="10" value="180.00000" disabled="yes" />
+            </div>
+            <div id="b_top" class="bounds">
+              <label for="bbox_top" class="bbox">top:</label>
+              <input type="text" id="bbox_top" class="bbox" maxlength="10" value="90.00000" disabled="yes" />
+            </div>
           </div>
         </div>
       </div>
 
       <div id="xapiurl">
-        Results:
-        <a id="results" href="">URL Here</a>
+        Your XAPI URL:
+        <span id="results_outer"><a id="results" href="">URL Here</a><span>
       </div>
     </div>
   </body>

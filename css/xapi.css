@@ -1,22 +1,55 @@
 /* Custom CSS for the XAPI page */
 * {position:relative;}
-
+h1#title {
+	margin:2px;
+}
 #bboxmap {
     width: 512px;
     height: 256px;
     margin: 0;
     border: solid 1px #ddd;
+    background-color:#eee;
 }
-#attribution{
-    display: block;
-    font-size:x-small;
+
+.filter_box_content {
+	background-color:#eaf5ea;
+	padding:10px;
+	margin-bottom:10px;
 }
+.filter_box_top {
+	font-weight:bold;
+	background-color:#E0EEE0;
+	padding:3px;
+	margin-top:10px;
+}
+
+#mapcontrol  {
+	padding:4px;
+}
+#mapcontrol label, #mapcontrol input {
+	cursor:pointer;
+}
+
+#xapiurl {
+	background-color:#FFFFAA;
+	font-weight:bold;
+	padding:10px;
+	margin:10px;
+}
+#results_outer {
+	font-family: Courier New, Courier, monospace;
+	background:WHITE;
+	border:1px solid GREY;
+	padding:2px 10px 2px 10px;
+}
+
+
 
 /*input { font: 1em Verdana, Arial, sans serif; border:none;}*/
 
-input[type='text'] { font: 0.9em Verdana, Arial, sans serif; border:none; margin: 1px; background:#eee; opacity: 0.8; }
+input[type='text'] { font: 0.9em Verdana, Arial, sans serif; border:none; margin: 1px; background:WHITE; opacity: 0.8; }
 input[type='text']:hover { border: 1px solid #888; color: #FF9200; margin: 0px; }
-input[type='text']:focus { background: #FFCA00; border: 1px solid #000; color: #000; margin: 0px; }
+input[type='text']:focus { background: #FFFFAA; border: 1px solid #000; color: #000; margin: 0px; }
 
 label.bbox { font-family:sans-serif; font-size:xx-small; font-weight:bold; display: block;}
 input.bbox { width:90px; text-align: center;}
