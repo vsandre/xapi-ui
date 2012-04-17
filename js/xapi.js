@@ -11,6 +11,8 @@ $(document).ready(function() {
   map = new OpenLayers.Map('bboxmap', 
                            {projection: "EPSG:900913",});
 
+  map.addControl(new OpenLayers.Control.Attribution());
+    
   // We'll use these projections in our functions later
   var goog =  new OpenLayers.Projection("EPSG:900913");
   var latlon = new OpenLayers.Projection("EPSG:4326");
@@ -275,13 +277,13 @@ $(document).ready(function() {
     document.title = json.title;
     $('#title').text(json.title);
 
-    var maps = json.map;
+    var maps = json.map; //get the set of configured map layers from config.json
     var count_maps = 0;
     $.each(maps, function(index, amap) {
       map.addLayer(new OpenLayers.Layer.OSM(amap.name,
-        amap.tiles + "${z}/${x}/${y}.png", {atribution:''}));
+        amap.tiles + "${z}/${x}/${y}.png", {attribution: amap.attribution }));
       count_maps++;
-      $('#attribution').append('<b>'+amap.name+':</b> '+amap.attribution+'<br />');
+      //$('#attribution').append('<b>'+amap.name+':</b> '+amap.attribution+'<br />');
     });
     if (count_maps>1) {
       map.addControl(new OpenLayers.Control.LayerSwitcher());
