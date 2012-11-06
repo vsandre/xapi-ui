@@ -1,5 +1,5 @@
 /* Custom CSS for the XAPI page */
-* {position:relative;}
+
 h1#title {
 	margin:2px;
 }
@@ -8,6 +8,7 @@ h1#title {
     height:100%;
     margin: 0;
 }
+
 #bboxmap_outer {
     padding:6px;
     width: 542px;
@@ -18,18 +19,19 @@ h1#title {
     background-color:#eee;
 }
 
-
 .filter_box_content {
 	background-color:#eaf5ea;
 	padding:10px;
 	margin-bottom:10px;
 }
+
 .filter_box_top {
 	font-weight:bold;
 	background-color:#E0EEE0;
 	padding:3px;
 	margin-top:10px;
 }
+
 
 #mapcontrol  {
 	padding:4px;
@@ -52,7 +54,6 @@ h1#title {
 }
 
 
-
 /*input { font: 1em Verdana, Arial, sans serif; border:none;}*/
 
 input[type='text'] { font: 0.9em Verdana, Arial, sans serif; border:none; margin: 1px; background:WHITE; opacity: 0.8; }
@@ -64,11 +65,11 @@ input.bbox { width:90px; text-align: center;}
 
 .bounds { border: none; text-align: center; width: 90px; height: 33px}
 
-#bbox {position:relative; margin:5px; height:99px; width:185px;}
-#b_top { position: absolute; top: 0px; left: 50px; }
-#b_right { position: absolute; top: 33px; left: 95px; }
+#bbox   { position:relative; margin:5px; height:99px; width:185px;}
+#b_top    { position: absolute; top: 0px; left: 50px; }
+#b_right  { position: absolute; top: 33px; left: 95px; }
 #b_bottom { position: absolute; top: 66px; left: 50px; }
-#b_left { position: absolute; top: 33px; left: 0px; }
+#b_left   { position: absolute; top: 33px; left: 0px; }
 
 /*OL BBOX*/
 .olBBOXselect{
