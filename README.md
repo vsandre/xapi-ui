@@ -1,22 +1,22 @@
 XAPI UI
 ========
 
-Next steps
------------
-- support multiple xapi instances
-- support other services based on bbox queries (OSM History, OWL, ...)
-- set maximum bbox for a service
-- list of predefined bboxs
-
 Description
 -----------
 
+A web user interface for building for building XAPI URLS.
+
+See it running: http://harrywood.co.uk/maps/uixapi/xapi.html
+
 This repository provides an HTML based frontend to OpenStreetMap's
 XAPI service, providing easy to use access to its most common feature
+.
+Originally developed by emacsen, this repo has the version Harry is running.
+Harry is also tracking issues and enhancement requests here with this github
+repo.
 
-While this services does not explicitly require running an XAPI
-service, it is recommended to point the service only at your own XAPI
-server in order to minimize traffic impact.
+For details of XAPI see: http://wiki.openstreetmap.org/wiki/Xapi
+
 
 Installation
 ------------
