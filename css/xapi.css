@@ -85,7 +85,7 @@ input.bbox { width:90px; text-align: center;}
 #b_left   { position: absolute; top: 33px; left: 0px; }
 
 /*OL BBOX*/
-.olBBOXselect{
+.olBBOXselect {
     border: 2px solid orange;
     position: absolute;
     background-color: white;
@@ -93,7 +93,7 @@ input.bbox { width:90px; text-align: center;}
     font-size: 1px;
     filter: alpha(opacity=50);
 }
-.olBBOX{
+.olBBOX {
     border: 2px solid orange;
     position: absolute;
     background-color: green;
@@ -101,3 +101,13 @@ input.bbox { width:90px; text-align: center;}
     font-size: 1px;
     filter: alpha(opacity=50);
 } 
+
+#footer {
+	margin:10px;
+	margin-top:30px;
+	font-size:80%;
+	text-align:right;
+}
+#footer a {
+	color:LIGHTGREY;
+}
