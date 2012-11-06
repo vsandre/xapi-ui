@@ -31,7 +31,7 @@
            <input type="checkbox" id="searchbytag" checked="checked" />
            <label for="searchbytag">Search by Tag</label>
         </div>
-        <div class="filter_box_content">
+        <div id="search_by_tag_filter" class="filter_box_content">
           <select id="element">
             <option value="*" selected="selected">Any</option>
             <option value="node">Nodes</option>
@@ -48,13 +48,13 @@
           <input type="checkbox" id="searchbybbox" />
           <label for="searchbybbox">Search by Area</label>
         </div>
-        <div class="filter_box_content">
+        <div id="search_by_bbox_filter" class="filter_box_content">
           
           <div id="mapcontrol">
-            <input type="radio" name="type" id="bboxNone" checked="checked" disabled="yes" />
+            <input type="radio" name="type" id="bboxNone" checked="checked" />
             <label for="bboxNone">navigate</label>
           
-            <input type="radio" name="type" id="bboxToggle" disabled="yes" />
+            <input type="radio" name="type" id="bboxToggle" />
             <label for="bboxToggle">select area</label>
           </div>
           
@@ -66,19 +66,19 @@
           <div id="bbox">
           <div id="b_left" class="bounds">
               <label for="bbox_left" class="bbox">left:</label>
-              <input type="text" id="bbox_left" class="bbox" maxlength="10" value="-180.00000" disabled="yes" />
+              <input type="text" id="bbox_left" class="bbox" maxlength="10" value="-180.00000" />
             </div>
             <div id="b_bottom" class="bounds">
               <label for="bbox_bottom" class="bbox">bottom:</label>
-              <input type="text" id="bbox_bottom" class="bbox" maxlength="10" value="-90.00000" disabled="yes" />
+              <input type="text" id="bbox_bottom" class="bbox" maxlength="10" value="-90.00000" />
             </div>
             <div id="b_right" class="bounds">
               <label for="bbox_right" class="bbox">right:</label>
-              <input type="text" id="bbox_right" class="bbox" maxlength="10" value="180.00000" disabled="yes" />
+              <input type="text" id="bbox_right" class="bbox" maxlength="10" value="180.00000" />
             </div>
             <div id="b_top" class="bounds">
               <label for="bbox_top" class="bbox">top:</label>
-              <input type="text" id="bbox_top" class="bbox" maxlength="10" value="90.00000" disabled="yes" />
+              <input type="text" id="bbox_top" class="bbox" maxlength="10" value="90.00000" />
             </div>
           </div>
         </div>

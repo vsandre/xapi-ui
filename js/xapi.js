@@ -208,16 +208,14 @@ $(document).ready(function() {
   // Set up some UI element functions
   $("#searchbytag").click(function() {
     if ( $(this).is(':checked') ) {
-      $('#tag').removeAttr('disabled');
-      $('#element').removeAttr('disabled');
+      $('#search_by_tag_filter').show();
     }
     else {
-      $('#tag').attr('disabled', 'disabled');
-      $('#element').attr('disabled', 'disabled');
+      $('#search_by_tag_filter').hide();
     };
     update_results();
   });
-
+  
   $('#element').change(function() {
     update_results(); });
   
@@ -226,21 +224,11 @@ $(document).ready(function() {
 
   $('#searchbybbox').click(function() {
     if ( $(this).is(':checked')) {
-      $('#bbox_top').removeAttr('disabled');
-      $('#bbox_bottom').removeAttr('disabled');
-      $('#bbox_left').removeAttr('disabled');
-      $('#bbox_right').removeAttr('disabled');
-      $('#bboxNone').removeAttr('disabled');
-      $('#bboxToggle').removeAttr('disabled');
+      $('#search_by_bbox_filter').show();
       drawbox = true;
     }
     else {
-      $('#bbox_top').attr('disabled', 'disabled');
-      $('#bbox_bottom').attr('disabled', 'disabled');
-      $('#bbox_left').attr('disabled', 'disabled');
-      $('#bbox_right').attr('disabled', 'disabled');
-      $('#bboxNone').attr('disabled', 'disabled');
-      $('#bboxToggle').attr('disabled', 'disabled');
+      $('#search_by_bbox_filter').hide();
       drawbox = false;
     };
     update_results();
@@ -291,5 +279,7 @@ $(document).ready(function() {
     map.zoomTo(1);
     update_results();
   });
+  
+  $('#search_by_bbox_filter').hide();
 
 });
