@@ -10,11 +10,6 @@
       "name": "OSM mapnik",
       "tiles": "http://tile.openstreetmap.org/",
       "attribution": "Data <a href='<http://www.openstreetmap.org/'>OpenStreetMap</a> and contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>"
-    },
-    {
-      "name": "OSM tile@home",
-      "tiles": "http://tah.openstreetmap.org/Tiles/tile/",
-      "attribution": "Data <a href='<http://www.openstreetmap.org/'>OpenStreetMap</a> and contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>"
     }
   ]
 }
