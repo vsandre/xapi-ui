@@ -40,17 +40,30 @@ h1#title {
 	cursor:pointer;
 }
 
-#xapiurl {
+#xapiurls {
 	background-color:#FFFFAA;
 	font-weight:bold;
-	padding:10px;
-	margin:10px;
+	font-size:90%;
+	padding:4px;
+	margin-top:14px;
 }
-#results_outer {
+
+#xapiurls tr.line {
+	padding:0px;
+	margin:8px;
+	width:100%;
+}
+#xapiurls td.label {
+	display:block;
+	width:13em;
+	text-align:right;
+}
+#xapiurls td.url_box {
+	width:auto;
 	font-family: Courier New, Courier, monospace;
 	background:WHITE;
 	border:1px solid GREY;
-	padding:2px 10px 2px 10px;
+	padding:2px 15px 2px 15px;
 }
 
 

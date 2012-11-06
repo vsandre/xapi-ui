@@ -2,7 +2,7 @@ $(document).ready(function() {
   // Set up some basics
   var config = {};
 
-  var baseurl;
+  var baseurls;
   
   // 'search by area' enables drawing new bbox
   var drawbox = false;
@@ -191,18 +191,28 @@ $(document).ready(function() {
 
   // Function to update the display on the page  
   var update_results = function() {
-    var results = baseurl + '/' ;
+  	  
+    var xapiQuery = '/' ;
     if ($('#searchbytag').is(':checked')) {
-      results = results + tagsearch();
+      xapiQuery = xapiQuery + tagsearch();
       if ($('#searchbybbox').is(':checked')) {
-        results = results + '[' + bboxstring() + ']'; };
+        xapiQuery = xapiQuery + '[' + bboxstring() + ']'; };
     }
     else {
       if ($('#searchbybbox').is(':checked')) {
-        results = results + 'map?' + bboxstring(); }
+        xapiQuery = xapiQuery + 'map?' + bboxstring(); }
     };
-    $('#results').text(results);
-    $('#results').attr('href', results);
+    
+    xapiurlHTML = "<table cellpadding=\"2\" cellspacing=\"2\">";
+    for (var i=0; i<baseurls.length; i++) {
+       url = baseurls[i]['url'] + xapiQuery;
+       xapiurlHTML += "<tr>" +
+                      "<td class=\"label\">" + baseurls[i]['label'] + " : </td> " +
+                      "<td class=\"url_box\"><a href=\"" + url + "\">" + url + "</a></td>" + 
+                      "</tr>\n";
+    }
+    xapiurlHTML += "</table>";
+    $('#xapiurls').html(xapiurlHTML);  
   };
 
   // Set up some UI element functions
@@ -260,7 +270,7 @@ $(document).ready(function() {
     update_results();});
 
   $.getJSON("config.json", function(json) {
-    baseurl = json.baseurl;
+    baseurls = json.baseurls;
     tileurl = json.tileurl;
     document.title = json.title;
     $('#title').text(json.title);
