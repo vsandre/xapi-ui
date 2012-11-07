@@ -99,10 +99,13 @@ $(document).ready(function() {
     handleRightClicks: false, // should be true if you use CTRL key
     autoActivate: true,
     draw: function() {
-        this.box = new OpenLayers.Handler.Box( this,
+        
+    	this.box = new OpenLayers.Handler.Box( this,
             {"done": this.notice},
             {keyMask: this.keyMask});
+        
         this.box.boxDivClassName = "olBBOXselect";
+        
         if (this.handleRightClicks) {
           this.map.viewPortDiv.oncontextmenu = OpenLayers.Function.False;
         }
@@ -135,11 +138,13 @@ $(document).ready(function() {
   
   var bboxKeyControl = new bboxControl({handleRightClicks:true, keyMask: OpenLayers.Handler.MOD_CTRL});
   map.addControl(bboxKeyControl);
-
+ 
   var bboxToggleControl = new bboxControl();
   map.addControl(bboxToggleControl);
   bboxToggleControl.deactivate();
-
+  
+  
+  
   // Function to return proper tag search string
   var tagsearch = function() {
     if($("#searchbytag").is(':checked')) {
@@ -192,7 +197,7 @@ $(document).ready(function() {
   // Function to update the display on the page  
   var update_results = function() {
   	  
-    var xapiQuery = '/' ;
+    var xapiQuery = '' ;
     if ($('#searchbytag').is(':checked')) {
       xapiQuery = xapiQuery + tagsearch();
       if ($('#searchbybbox').is(':checked')) {
