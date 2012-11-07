@@ -277,8 +277,6 @@ $(document).ready(function() {
   $.getJSON("config.json", function(json) {
     baseurls = json.baseurls;
     tileurl = json.tileurl;
-    document.title = json.title;
-    $('#title').text(json.title);
 
     var maps = json.map; //get the set of configured map layers from config.json
     var count_maps = 0;
