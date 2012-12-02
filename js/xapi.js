@@ -174,11 +174,11 @@ $(document).ready(function() {
                    
       wayFilter =  "  --tag-filter reject-relations \\<br>\n" +
                    "  --tag-filter accept-ways " + $('#tag').val() +" \\<br>\n" +
-                   "  --used-node \\<br>\n";
+                   "  --used-node";
                    
       relationFilter = "  --tag-filter accept-relations " + $('#tag').val() +" \\<br>\n" +
                        "  --used-way \\<br>\n" +
-                       "  --used-node \\<br>\n";
+                       "  --used-node";
                   
       if ($('#element').val()=="*") {
         cmd += readClause +
