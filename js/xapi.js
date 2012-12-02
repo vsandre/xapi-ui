@@ -148,7 +148,9 @@ $(document).ready(function() {
   // Function to return proper tag search XAPI clause
   var tagFilterXAPIclause = function() {
     if($("#searchbytag").is(':checked')) {
-      t = $('#element').val() + '[' + $('#tag').val() + ']';
+      var tag = encodeURIComponent($('#tag').val());
+      tag = tag.replace("%3D", "=");
+      t = $('#element').val() + '[' + tag + ']';
     }
     else { t = ""; };
     return t;
@@ -168,15 +170,23 @@ $(document).ready(function() {
     cmd = "osmosis \\<br>\n"
   
     if ($("#searchbytag").is(':checked')) {
+    	    
+      var tag = $('#tag').val();
+      tag = tag.replace("%", "%%");
+      tag = tag.replace("*", "%a");
+      tag = tag.replace(" ", "%s");
+      tag = tag.replace(",", "%c");
+      //tag = tag.replace("=", "%e");
+      
       nodeFilter = "  --tag-filter reject-relations \\<br>\n" +
-                   "  --tag-filter accept-nodes " + $('#tag').val() +" \\<br>\n" +
+                   "  --tag-filter accept-nodes " + tag +" \\<br>\n" +
                    "  --tag-filter reject-ways";
                    
       wayFilter =  "  --tag-filter reject-relations \\<br>\n" +
-                   "  --tag-filter accept-ways " + $('#tag').val() +" \\<br>\n" +
+                   "  --tag-filter accept-ways " + tag +" \\<br>\n" +
                    "  --used-node";
                    
-      relationFilter = "  --tag-filter accept-relations " + $('#tag').val() +" \\<br>\n" +
+      relationFilter = "  --tag-filter accept-relations " + tag +" \\<br>\n" +
                        "  --used-way \\<br>\n" +
                        "  --used-node";
                   
