@@ -145,8 +145,8 @@ $(document).ready(function() {
   
   
   
-  // Function to return proper tag search string
-  var tagsearch = function() {
+  // Function to return proper tag search XAPI clause
+  var tagFilterXAPIclause = function() {
     if($("#searchbytag").is(':checked')) {
       t = $('#element').val() + '[' + $('#tag').val() + ']';
     }
@@ -154,26 +154,79 @@ $(document).ready(function() {
     return t;
   };
 
-  // Function to return a bbox string
-  var bboxstring = function() {
+  // Function to return a bbox XAPI clause
+  var bboxXAPIclause = function() {
     var b = 'bbox=' + bbox.left.get() + ',' + bbox.bottom.get() +
       ',' + bbox.right.get() + ',' + bbox.top.get();
     return b;
-  }
+  };
+  
+  // Function to return an osmosis command based on chosen filters
+  var osmosisCommand = function() {
+    readClause = "  --read-pbf $PBFFILE \\<br>\n";
+  	  
+    cmd = "osmosis \\<br>\n"
+  
+    if ($("#searchbytag").is(':checked')) {
+      nodeFilter = "  --tag-filter reject-relations \\<br>\n" +
+                   "  --tag-filter accept-nodes " + $('#tag').val() +" \\<br>\n" +
+                   "  --tag-filter reject-ways";
+                   
+      wayFilter =  "  --tag-filter reject-relations \\<br>\n" +
+                   "  --tag-filter accept-ways " + $('#tag').val() +" \\<br>\n" +
+                   "  --used-node \\<br>\n";
+                   
+      relationFilter = "  --tag-filter accept-relations " + $('#tag').val() +" \\<br>\n" +
+                       "  --used-way \\<br>\n" +
+                       "  --used-node \\<br>\n";
+                  
+      if ($('#element').val()=="*") {
+        cmd += readClause +
+               wayFilter + " outPipe.0=waydata \\<br>\n" +
+               "  \\<br>\n" +
+               nodeFilter + " outPipe.0=nodedata \\<br>\n" +
+               "  \\<br>\n" +
+               "  --merge inPipe.0=nodedata inPipe.1=waydata \\<br>\n";
+               
+      } else if ($('#element').val()=="way") {
+        cmd += readClause +
+               wayFilter + " \\<br>\n";
+               
+      } else if ($('#element').val()=="node") {
+        cmd += readClause +
+               nodeFilter + " \\<br>\n";
+               
+      } else if ($('#element').val()=="relation") {
+        cmd += readClause +
+               relationFilter + " \\<br>\n";
+      }
+    }
+    
+    if  ($("#searchbybbox").is(':checked')) {
+      cmd += "  --bounding-box top=" + bbox.top.get() +
+                             " left=" + bbox.left.get() +
+                             " bottom=" + bbox.bottom.get() +
+                             " right=" + bbox.right.get() + " \\<br>\n";
+    }
+    
+    cmd +="  --write-xml extract.osm";
+        
+    return cmd
+  };
 
   var update_inputfields = function() {
     $('#bbox_left').val(bbox.left.get());
     $('#bbox_bottom').val(bbox.bottom.get());
     $('#bbox_right').val(bbox.right.get());
     $('#bbox_top').val(bbox.top.get());
-  }
+  };
   
   var read_inputfields = function() {
     bbox.left.set($('#bbox_left').val());
     bbox.bottom.set($('#bbox_bottom').val());
     bbox.right.set($('#bbox_right').val());
     bbox.top.set($('#bbox_top').val());
-  }
+  };
 
   // Update the bbox from the text to the map
   var update_bbox = function() {
@@ -199,13 +252,13 @@ $(document).ready(function() {
   	  
     var xapiQuery = '' ;
     if ($('#searchbytag').is(':checked')) {
-      xapiQuery = xapiQuery + tagsearch();
+      xapiQuery = xapiQuery + tagFilterXAPIclause();
       if ($('#searchbybbox').is(':checked')) {
-        xapiQuery = xapiQuery + '[' + bboxstring() + ']'; };
+        xapiQuery = xapiQuery + '[' + bboxXAPIclause() + ']'; };
     }
     else {
       if ($('#searchbybbox').is(':checked')) {
-        xapiQuery = xapiQuery + 'map?' + bboxstring(); }
+        xapiQuery = xapiQuery + 'map?' + bboxXAPIclause(); }
     };
     
     xapiurlHTML = "<table cellpadding=\"2\" cellspacing=\"2\">";
@@ -218,6 +271,10 @@ $(document).ready(function() {
     }
     xapiurlHTML += "</table>";
     $('#xapiurls').html(xapiurlHTML);  
+    
+    
+    osmosiscmdHTML = osmosisCommand(); 
+    $('#osmosiscmd').html( osmosiscmdHTML );  
   };
 
   // Set up some UI element functions
