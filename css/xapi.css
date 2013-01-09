@@ -84,6 +84,24 @@ h1#title {
 }
 
 
+#xsltlist_outer {
+	background-color:#FFFFAA;
+	font-weight:bold;
+	font-size:90%;
+	padding:4px;
+	margin-top:14px;
+}
+#xsltlist {
+	width:auto;
+	font-family: Courier New, Courier, monospace;
+	font-weight: normal;
+	background:WHITE;
+	border:1px solid GREY;
+	padding:2px 15px 2px 15px;
+}
+
+
+
 /*input { font: 1em Verdana, Arial, sans serif; border:none;}*/
 
 input[type='text'] { font: 0.9em Verdana, Arial, sans serif; border:none; margin: 1px; background:WHITE; opacity: 0.8; }

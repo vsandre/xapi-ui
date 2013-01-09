@@ -360,6 +360,25 @@ $(document).ready(function() {
     update_results();
   });
   
+  // Function to perform XAPI query in-browser
+  var doxsltlist = function() {
+    // Check that a tag, AND an area have been selected
+
+
+    // Check that the area is small enough - if massive, refuse; if medium, warn
+
+
+    // submit XAPI call, and register "xsltreceived()" callback for when it arrives
+
+
+    // tell the user to be patient :)
+    $('#xsltlist').html('<p>Submitted query - please wait. XAPI queries often take AT LEAST TEN SECONDS.</p>')
+  };
+  $('#xsltlist_gobut').click(doxsltlist);
+  var xsltreceived = function() {
+    // apply the XSLT and render
+  };
+
   $('#search_by_bbox_filter').hide();
 
 });
