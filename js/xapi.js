@@ -382,12 +382,14 @@ $(document).ready(function() {
     }
   }, 'xml');
 
+  var latest_queryurl; // This globalvar is to prevent collisions of multiple requests
   var xapixmlreceived = function(data, queryurl) {
+    if(latest_queryurl != queryurl){
+      alert("Received result for\n"+queryurl+"\nbut superceded by\n"+latest_queryurl);  // TMP - just for dev
+      return;
+    }
+
     // apply the XSLT and render
-
-    // TMP
-    //alert('page content: ' + data);
-
     if (window.ActiveXObject) { // IE
       rendered=data.transformNode(xsl);
     } else if (document.implementation && document.implementation.createDocument) {  // Mozilla, Firefox, Opera, etc.
@@ -395,7 +397,6 @@ $(document).ready(function() {
     }
     $('#xsltlist').html(rendered);
     $('#xsltlist_ps').html('<p>Queried from:</p><pre>'+queryurl+'</pre>');
-    //$('#xsltlist').html('<p>Got it.</p>');
   };
 
   var requestxsltlist = function() {
@@ -420,12 +421,13 @@ $(document).ready(function() {
           return;
     }
 
-    alert(queryurl); // TMP
-
     // ask the user to be patient :)
     $('#xsltlist').html('<p>Submitted query - please wait. XAPI queries often take AT LEAST TEN SECONDS.</p><pre>Querying '+queryurl+'</pre>');
+    latest_queryurl = queryurl; // remember most recent submission
     // submit XAPI call
-    $.get('placeholder_pubs.xml', function(data) {xapixmlreceived(data, queryurl)}, 'xml');
+    xapiurl = queryurl;
+    //xapiurl = 'placeholder_pubs.xml'; // This is handy for local devt
+    $.get(xapiurl, function(data) {xapixmlreceived(data, queryurl)}, 'xml');
 
   };
   $('#xsltlist_gobut').click(requestxsltlist);
