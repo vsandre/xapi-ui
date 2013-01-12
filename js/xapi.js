@@ -360,8 +360,46 @@ $(document).ready(function() {
     update_results();
   });
   
-  // Function to perform XAPI query in-browser
-  var doxsltlist = function() {
+  ////////////////////////////////////////////////
+  // Functions to perform XAPI query in-browser
+  // prepare the XSLT renderer
+  var xsl;
+  var xsltProcessor;
+  $.get('xapi_to_html.xsl', function(data){
+    xsl = data;
+    if ((!window.ActiveXObject) && (document.implementation && document.implementation.createDocument))  // not IE but Mozilla, Firefox, Opera, etc.
+    {
+      xsltProcessor=new XSLTProcessor();
+      xsltProcessor.importStylesheet(xsl);
+    }
+  }, 'xml');
+
+  var xapixmlreceived = function(data) {
+    // apply the XSLT and render
+
+    // TMP
+    alert('page content: ' + data);
+
+
+
+    if (window.ActiveXObject) // IE
+    {
+      rendered=data.transformNode(xsl);
+    }
+    else if (document.implementation && document.implementation.createDocument)  // Mozilla, Firefox, Opera, etc.
+    {
+      rendered = xsltProcessor.transformToFragment(data, document);
+    }
+
+
+
+
+
+    $('#xsltlist').html(rendered);
+    //$('#xsltlist').html('<p>Got it.</p>');
+  };
+
+  var requestxsltlist = function() {
     // Check that a tag, AND an area have been selected
 
 
@@ -372,12 +410,17 @@ $(document).ready(function() {
 
 
     // tell the user to be patient :)
-    $('#xsltlist').html('<p>Submitted query - please wait. XAPI queries often take AT LEAST TEN SECONDS.</p>')
+    $('#xsltlist').html('<p>Submitted query - please wait. XAPI queries often take AT LEAST TEN SECONDS.</p>');
+
+    $.get('placeholder_pubs.xml', xapixmlreceived, 'xml');
+
   };
-  $('#xsltlist_gobut').click(doxsltlist);
-  var xsltreceived = function() {
-    // apply the XSLT and render
-  };
+  $('#xsltlist_gobut').click(requestxsltlist);
+
+
+
+
+
 
   $('#search_by_bbox_filter').hide();
 
