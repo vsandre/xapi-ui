@@ -17,6 +17,7 @@ repo.
 
 For details of XAPI see: http://wiki.openstreetmap.org/wiki/Xapi
 
+The in-browser table rendering feature is by Dan Stowell.
 
 Installation
 ------------
