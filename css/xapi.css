@@ -103,8 +103,11 @@ h1#title {
 table#xapiresults {width: 100%; border-collapse: collapse; border: 1px solid black;}
 table#xapiresults tr th {background-color: silver;}
 table#xapiresults tr td {vertical-align: top;}
-.tagk {color: gray;}
+.tag    .tagk {color: rgb(150, 150, 150);}
+.tag_hi .tagk {color: rgb(100, 100, 100);}
+.tag_hi       {font-weight: bold;}
 .xapiresults_objid, .xapiresults_latlon { display: block; margin: 10px;}
+td.xapiresults_tagcell {font-size: smaller;}
 
 /*input { font: 1em Verdana, Arial, sans serif; border:none;}*/
 
