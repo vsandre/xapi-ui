@@ -21,5 +21,25 @@
     <tag k="toilets:wheelchair" v="no"/>
     <tag k="wheelchair" v="limited"/>
   </node>
+  <way id="3987624">
+    <nd ref="17577512"/>
+    <nd ref="20831440"/>
+    <nd ref="20831441"/>
+    <nd ref="20831437"/>
+    <nd ref="20831438"/>
+    <nd ref="17577512"/>
+    <tag k="amenity" v="pub"/>
+    <tag k="building" v="yes"/>
+    <tag k="landuse" v="commercial"/>
+    <tag k="name" v="The Maypole"/>
+  </way>
+  <relation id="1659702">
+    <member type="way" ref="121249985" role="outer"/>
+    <member type="way" ref="121249984" role="inner"/>
+    <tag k="amenity" v="pub"/>
+    <tag k="building" v="yes"/>
+    <tag k="name" v="The Millhouse"/>
+    <tag k="type" v="multipolygon"/>
+  </relation>
 </osm>
 
