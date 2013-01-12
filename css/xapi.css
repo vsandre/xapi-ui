@@ -84,6 +84,7 @@ h1#title {
 }
 
 
+/* The UI elements for requesting the in-browser table */
 #xsltlist_outer {
 	background-color:#FFFFAA;
 	font-weight:bold;
@@ -98,8 +99,12 @@ h1#title {
 	border:1px solid GREY;
 	padding:2px 15px 2px 15px;
 }
-
-
+/* Styling for the rendered table itself */
+table#xapiresults {width: 100%; border-collapse: collapse; border: 1px solid black;}
+table#xapiresults tr th {background-color: silver;}
+table#xapiresults tr td {vertical-align: top;}
+.tagk {color: gray;}
+.xapiresults_objid, .xapiresults_latlon { display: block; margin: 10px;}
 
 /*input { font: 1em Verdana, Arial, sans serif; border:none;}*/
 

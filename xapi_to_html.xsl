@@ -2,19 +2,9 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="/">
-  <html>
-  <head>
-    <style type="text/css">
-       .tagk {color: gray;}
-    </style>
-  </head>
-  <body>
-  <h2>OSM pubs</h2>
-    <table border="1">
-      <tr bgcolor="#9acd32">
-        <th>type</th>
-        <th>id</th>
-        <th>loc</th>
+    <table id="xapiresults" border="1">
+      <tr>
+        <th>id,loc</th>
         <th>Name</th>
         <th>Tags</th>
       </tr>
@@ -22,9 +12,9 @@
         <xsl:choose>
         <xsl:when test="tag[@k='amenity'][@v='pub']">
 	      <tr>
-		<td>node</td>
-		<td><a><xsl:attribute name='href'>http://www.openstreetmap.org/browse/node/<xsl:value-of select="@id"/></xsl:attribute><xsl:value-of select="@id"/></a></td>
-		<td><a><xsl:attribute name='href'>http://www.openstreetmap.org/?lat=<xsl:value-of select="@lat"/>&amp;lon=<xsl:value-of select="@lon"/>&amp;zoom=18</xsl:attribute><xsl:value-of select="@lat"/>, <xsl:value-of select="@lon"/></a></td>
+		<td><a class="xapiresults_objid"><xsl:attribute name='href'>http://www.openstreetmap.org/browse/node/<xsl:value-of select="@id"/></xsl:attribute>
+			node <xsl:value-of select="@id"/></a>
+		    <a class="xapiresults_latlon"><xsl:attribute name='href'>http://www.openstreetmap.org/?lat=<xsl:value-of select="@lat"/>&amp;lon=<xsl:value-of select="@lon"/>&amp;zoom=18</xsl:attribute><xsl:value-of select="@lat"/>, <xsl:value-of select="@lon"/></a></td>
 		<td>n<xsl:value-of select="tag[@k='name']"/>e</td>
 		<td>
                   <xsl:for-each select="tag">
@@ -36,7 +26,5 @@
        </xsl:choose>
      </xsl:for-each>
     </table>
-  </body>
-  </html>
 </xsl:template>
 </xsl:stylesheet>

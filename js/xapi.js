@@ -162,6 +162,9 @@ $(document).ready(function() {
       ',' + bbox.right.get() + ',' + bbox.top.get();
     return b;
   };
+  var bboxarea = function() {
+    return Math.abs(parseFloat(bbox.right.get()) - parseFloat(bbox.left.get())) * Math.abs(parseFloat(bbox.bottom.get()) - parseFloat(bbox.top.get()));
+  };
   
   // Function to return an osmosis command based on chosen filters
   var osmosisCommand = function() {
@@ -264,7 +267,11 @@ $(document).ready(function() {
     if ($('#searchbytag').is(':checked')) {
       xapiQuery = xapiQuery + tagFilterXAPIclause();
       if ($('#searchbybbox').is(':checked')) {
-        xapiQuery = xapiQuery + '[' + bboxXAPIclause() + ']'; };
+        xapiQuery = xapiQuery + '[' + bboxXAPIclause() + ']';
+        if (bboxarea() >= 1){
+          // TODO note onscreen that area needs to be smaller, if you want in-browser render
+        }
+      };
     }
     else {
       if ($('#searchbybbox').is(':checked')) {
@@ -284,7 +291,8 @@ $(document).ready(function() {
     
     
     osmosiscmdHTML = osmosisCommand(); 
-    $('#osmosiscmd').html( osmosiscmdHTML );  
+    $('#osmosiscmd').html( osmosiscmdHTML );
+
   };
 
   // Set up some UI element functions
@@ -374,45 +382,50 @@ $(document).ready(function() {
     }
   }, 'xml');
 
-  var xapixmlreceived = function(data) {
+  var xapixmlreceived = function(data, queryurl) {
     // apply the XSLT and render
 
     // TMP
-    alert('page content: ' + data);
+    //alert('page content: ' + data);
 
-
-
-    if (window.ActiveXObject) // IE
-    {
+    if (window.ActiveXObject) { // IE
       rendered=data.transformNode(xsl);
-    }
-    else if (document.implementation && document.implementation.createDocument)  // Mozilla, Firefox, Opera, etc.
-    {
+    } else if (document.implementation && document.implementation.createDocument) {  // Mozilla, Firefox, Opera, etc.
       rendered = xsltProcessor.transformToFragment(data, document);
     }
-
-
-
-
-
     $('#xsltlist').html(rendered);
+    $('#xsltlist_ps').html('<p>Queried from:</p><pre>'+queryurl+'</pre>');
     //$('#xsltlist').html('<p>Got it.</p>');
   };
 
   var requestxsltlist = function() {
-    // Check that a tag, AND an area have been selected
 
+    queryurl = 'http://www.overpass-api.de/api/xapi?';
+    // only allow xapiQuery if both tag-search and area-search are enabled, and the area to search is small
+    if ($('#searchbytag').is(':checked')) {
+      queryurl += tagFilterXAPIclause();
+      if ($('#searchbybbox').is(':checked')) {
+        if (bboxarea() < 1){
+          queryurl += '[' + bboxXAPIclause() + ']';
+        } else {
+          alert("Please choose a smaller area. Maximum is 1 degree-squared, current selection is " + bboxarea());
+          return;
+        }
+      } else {
+          alert("The in-browser display will only run if you specify a tag search AND an area search (less than 1 degree square)");
+          return;
+      }
+    } else {
+          alert("The in-browser display will only run if you specify a tag search AND an area search (less than 1 degree square)");
+          return;
+    }
 
-    // Check that the area is small enough - if massive, refuse; if medium, warn
+    alert(queryurl); // TMP
 
-
-    // submit XAPI call, and register "xsltreceived()" callback for when it arrives
-
-
-    // tell the user to be patient :)
-    $('#xsltlist').html('<p>Submitted query - please wait. XAPI queries often take AT LEAST TEN SECONDS.</p>');
-
-    $.get('placeholder_pubs.xml', xapixmlreceived, 'xml');
+    // ask the user to be patient :)
+    $('#xsltlist').html('<p>Submitted query - please wait. XAPI queries often take AT LEAST TEN SECONDS.</p><pre>Querying '+queryurl+'</pre>');
+    // submit XAPI call
+    $.get('placeholder_pubs.xml', function(data) {xapixmlreceived(data, queryurl)}, 'xml');
 
   };
   $('#xsltlist_gobut').click(requestxsltlist);
