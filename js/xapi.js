@@ -269,12 +269,11 @@ $(document).ready(function() {
       xapiQuery = xapiQuery + tagFilterXAPIclause();
       if ($('#searchbybbox').is(':checked')) {
         xapiQuery = xapiQuery + '[' + bboxXAPIclause() + ']';
-        if (bboxarea() >= bboxarea_maxpermit){
-          // TODO note onscreen that area needs to be smaller, if you want in-browser render
-          $('#xsltlist_bybut').html(' (bounding box is currently too big to run in-browser)')
+        if (bboxarea() < bboxarea_maxpermit){
+          $('#xsltlist_bybut').html('&nbsp;');
         }else{
-          $('#xsltlist_bybut').html('')
-        };
+          $('#xsltlist_bybut').html(' (bounding box is currently too big to run in-browser)');
+        }
       };
     }
     else {

@@ -99,6 +99,7 @@ h1#title {
 	border:1px solid GREY;
 	padding:2px 15px 2px 15px;
 }
+#xsltlist_bybut {display: inline; font-size: smaller; font-weight: normal; font-style:italic;}
 /* Styling for the rendered table itself */
 table#xapiresults {width: 100%; border-collapse: collapse; border: 1px solid black;}
 table#xapiresults tr th {background-color: silver;}
