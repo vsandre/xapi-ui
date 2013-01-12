@@ -165,6 +165,7 @@ $(document).ready(function() {
   var bboxarea = function() {
     return Math.abs(parseFloat(bbox.right.get()) - parseFloat(bbox.left.get())) * Math.abs(parseFloat(bbox.bottom.get()) - parseFloat(bbox.top.get()));
   };
+  var bboxarea_maxpermit = 0.5;
   
   // Function to return an osmosis command based on chosen filters
   var osmosisCommand = function() {
@@ -268,9 +269,12 @@ $(document).ready(function() {
       xapiQuery = xapiQuery + tagFilterXAPIclause();
       if ($('#searchbybbox').is(':checked')) {
         xapiQuery = xapiQuery + '[' + bboxXAPIclause() + ']';
-        if (bboxarea() >= 1){
+        if (bboxarea() >= bboxarea_maxpermit){
           // TODO note onscreen that area needs to be smaller, if you want in-browser render
-        }
+          $('#xsltlist_bybut').html(' (bounding box is currently too big to run in-browser)')
+        }else{
+          $('#xsltlist_bybut').html('')
+        };
       };
     }
     else {
@@ -406,18 +410,18 @@ $(document).ready(function() {
     if ($('#searchbytag').is(':checked')) {
       queryurl += tagFilterXAPIclause();
       if ($('#searchbybbox').is(':checked')) {
-        if (bboxarea() < 1){
+        if (bboxarea() < bboxarea_maxpermit){
           queryurl += '[' + bboxXAPIclause() + ']';
         } else {
-          alert("Please choose a smaller area. Maximum is 1 degree-squared, current selection is " + bboxarea());
+          alert("Please choose a smaller area. Maximum is "+bboxarea_maxpermit+" degree-squared, current selection is " + bboxarea());
           return;
         }
       } else {
-          alert("The in-browser display will only run if you specify a tag search AND an area search (less than 1 degree square)");
+          alert("The in-browser display will only run if you specify a tag search AND an area search (less than "+bboxarea_maxpermit+" degree square)");
           return;
       }
     } else {
-          alert("The in-browser display will only run if you specify a tag search AND an area search (less than 1 degree square)");
+          alert("The in-browser display will only run if you specify a tag search AND an area search (less than "+bboxarea_maxpermit+" degree square)");
           return;
     }
 
