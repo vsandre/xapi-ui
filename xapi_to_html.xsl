@@ -2,11 +2,18 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:template match="/">
+
+    Found 
+      <xsl:value-of select="count(osm/node[tag])"/>    <xsl:text> </xsl:text><a href="#xapiresults_nodes">node(s)</a>,
+      <xsl:value-of select="count(osm/way[tag])"/>     <xsl:text> </xsl:text><a href="#xapiresults_ways">way(s)</a>,
+      <xsl:value-of select="count(osm/relation[tag])"/><xsl:text> </xsl:text><a href="#xapiresults_relations">relation(s)</a>.
+
+
     <table id="xapiresults" border="1">
 
       <!-- nodes  -->
       <tr>
-        <th>Node</th>
+        <th><a name="xapiresults_nodes"/>Node</th>
         <th>Tags</th>
       </tr>
       <xsl:for-each select="osm/node">
@@ -28,7 +35,7 @@
 
       <!-- ways  -->
       <tr>
-        <th>Way</th>
+        <th><a name="xapiresults_ways"/>Way</th>
         <th>Tags</th>
       </tr>
       <xsl:for-each select="osm/way">
@@ -48,7 +55,7 @@
 
       <!-- relations  -->
       <tr>
-        <th>Relation</th>
+        <th><a name="xapiresults_relations"/>Relation</th>
         <th>Tags</th>
       </tr>
       <xsl:for-each select="osm/relation">
