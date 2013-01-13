@@ -7,6 +7,7 @@
       <xsl:value-of select="count(osm/node[tag])"/>    <xsl:text> </xsl:text><a href="#xapiresults_nodes">node(s)</a>,
       <xsl:value-of select="count(osm/way[tag])"/>     <xsl:text> </xsl:text><a href="#xapiresults_ways">way(s)</a>,
       <xsl:value-of select="count(osm/relation[tag])"/><xsl:text> </xsl:text><a href="#xapiresults_relations">relation(s)</a>.
+      (Not counting objects without tags.)
 
 
     <table id="xapiresults" border="1">
