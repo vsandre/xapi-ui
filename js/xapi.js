@@ -272,7 +272,7 @@ $(document).ready(function() {
         if (bboxarea() < bboxarea_maxpermit){
           $('#xsltlist_bybut').html('&nbsp;');
         }else{
-          $('#xsltlist_bybut').html(' (bounding box is currently too big to run in-browser)');
+          $('#xsltlist_bybut').html(' (bounding box is currently too big to run in-browser [max '+bboxarea_maxpermit+' deg sq])');
         }
       };
     }
@@ -407,6 +407,10 @@ $(document).ready(function() {
     queryurl = 'http://www.overpass-api.de/api/xapi?';
     // only allow xapiQuery if both tag-search and area-search are enabled, and the area to search is small
     if ($('#searchbytag').is(':checked')) {
+      if($('#tag').val()=='key=value'){
+         alert("\"key=value\" is not a real tag query - try something like:\n  amenity=pub\n  barrier=gate\n  highway=*");
+         return;
+      }
       queryurl += tagFilterXAPIclause();
       if ($('#searchbybbox').is(':checked')) {
         if (bboxarea() < bboxarea_maxpermit){
