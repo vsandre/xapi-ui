@@ -464,6 +464,23 @@ $(document).ready(function() {
 
 
 
+  // This bit creates the "tabbed" functionality
+  $('#tab_cmds').click(function(){
+    $('#xapicmds_outer').show();
+    $('#xsltlist_outer').hide();
+    $('#tab_cmds').addClass('tabselected');
+    $('#tab_live').removeClass('tabselected');
+  });
+  $('#tab_live').click(function(){
+    $('#xapicmds_outer').hide();
+    $('#xsltlist_outer').show();
+    $('#tab_cmds').removeClass('tabselected');
+    $('#tab_live').addClass('tabselected');
+  });
+
+
+
+
 
 
   if(($('#searchbybbox').is(':checked'))){
@@ -472,5 +489,7 @@ $(document).ready(function() {
   }else{
     $('#search_by_bbox_filter').hide();
   }
+  $('#xsltlist_outer').hide();
 
 });
+

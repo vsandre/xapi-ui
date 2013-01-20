@@ -99,6 +99,23 @@ h1#title {
 }
 
 
+ul#tabstabs {
+	display: block;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+ul#tabstabs li {
+	display: inline-block;
+	margin: 0px;
+	padding: 5px 40px;
+	border-bottom: 1px solid black;
+	border-left: none;
+	border-right: none;
+	border-top: none;
+}
+
+
 /* The UI elements for requesting the in-browser table */
 #xsltlist_outer {
 	background-color:#FFFFAA;
@@ -114,7 +131,7 @@ h1#title {
 	border:1px solid GREY;
 	padding:2px 15px 2px 15px;
 }
-#xsltlist_bybut {display: inline; font-size: smaller; font-weight: normal; font-style:italic;}
+#xsltlist_bybut {display: inline; font-size: x-small; font-weight: normal; font-style:italic;}
 /* Styling for the rendered table itself */
 table#xapiresults {width: 100%; border-collapse: collapse; border: 1px solid black;}
 table#xapiresults tr th {background-color: silver;}
