@@ -8,8 +8,7 @@ $(document).ready(function() {
   var drawbox = false;
   
   // Set up the map
-  map = new OpenLayers.Map('bboxmap', 
-                           {projection: "EPSG:900913",});
+  map = new OpenLayers.Map('bboxmap', {projection: "EPSG:900913",});
 
   map.addControl(new OpenLayers.Control.Attribution());
     
@@ -372,6 +371,30 @@ $(document).ready(function() {
   });
   
   ////////////////////////////////////////////////
+  // Functions to handle geolocation
+  var geolocinit;
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition( function (userloc) {
+      userlon = userloc.coords.longitude;
+      userlat = userloc.coords.latitude;
+      $('#bbox_left'  ).val(userlon-0.1);
+      $('#bbox_bottom').val(userlat-0.05);
+      $('#bbox_right' ).val(userlon+0.1);
+      $('#bbox_top'   ).val(userlat+0.05);
+      read_inputfields();
+      update_bbox();
+      update_results();
+      var fromProjection = new OpenLayers.Projection("EPSG:4326"); // transform from WGS 1984
+      var toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+      map.zoomToExtent(
+	new OpenLayers.Bounds((userlon-0.15), (userlat-0.075), (userlon+0.15), (userlat+0.075)).transform(fromProjection,toProjection)
+	);
+    });
+  }else{
+    //geolocinit = function(){};
+  }
+
+  ////////////////////////////////////////////////
   // Functions to perform XAPI query in-browser
   // prepare the XSLT renderer
   var xsl;
@@ -443,7 +466,11 @@ $(document).ready(function() {
 
 
 
-
-  $('#search_by_bbox_filter').hide();
+  if(($('#searchbybbox').is(':checked'))){
+    $('#search_by_bbox_filter').show();
+    drawbox = true;
+  }else{
+    $('#search_by_bbox_filter').hide();
+  }
 
 });
