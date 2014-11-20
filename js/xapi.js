@@ -180,10 +180,10 @@ $(document).ready(function() {
     	    
       var tag = $('#tag').val();
       tag = tag.replace("%", "%%");
-      tag = tag.replace("*", "%a");
       tag = tag.replace(" ", "%s");
       tag = tag.replace(",", "%c");
       //tag = tag.replace("=", "%e");
+      //tag = tag.replace("*", "%a");
       
       nodeFilter = "  --tag-filter reject-relations \\<br>\n" +
                    "  --tag-filter accept-nodes " + tag +" \\<br>\n" +
