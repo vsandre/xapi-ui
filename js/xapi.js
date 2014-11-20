@@ -172,7 +172,11 @@ $(document).ready(function() {
   	  
     cmd = "osmosis \\<br>\n"
   
-    if ($("#searchbytag").is(':checked')) {
+    if (!$("#searchbytag").is(':checked')) {
+      //Not doing a tag filter. Much shorter command.
+      cmd += readClause;
+    	    
+    } else {
     	    
       var tag = $('#tag').val();
       tag = tag.replace("%", "%%");
