@@ -197,6 +197,7 @@ $(document).ready(function() {
         cmd += readClause +
                wayFilter + " outPipe.0=waydata \\<br>\n" +
                "  \\<br>\n" +
+               readClause +
                nodeFilter + " outPipe.0=nodedata \\<br>\n" +
                "  \\<br>\n" +
                "  --merge inPipe.0=nodedata inPipe.1=waydata \\<br>\n";
