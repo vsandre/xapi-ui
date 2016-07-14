@@ -1,0 +1,27 @@
+{ 
+  "baseurls": [
+    {
+      "label" : "rabler.ru",
+      "url" : "http://jxapi.osm.rambler.ru/xapi/api/0.6/"
+    },
+    {
+      "label" : "MapQuest (out of date)",
+      "url" : "http://open.mapquestapi.com/xapi/api/0.6/"
+    },
+    {
+      "label" : "jxapi.openstreetmap.org",
+      "url" : "http://jxapi.openstreetmap.org/xapi/api/0.6/"
+    },
+    {
+      "label" : "Overpass API",
+      "url" : "http://www.overpass-api.de/api/xapi?"
+    } 
+  ],
+  "map": [
+    {
+      "name": "OSM mapnik",
+      "tiles": "http://tile.openstreetmap.org/",
+      "attribution": "Data <a href='<http://www.openstreetmap.org/'>OpenStreetMap</a> and contributors, <a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>"
+    }
+  ]
+}
